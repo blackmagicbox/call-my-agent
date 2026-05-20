@@ -23,11 +23,13 @@ type Experience struct {
 }
 
 type Preferences struct {
-	TargetRoles  []string `json:"target_roles"`
-	TargetLevels []string `json:"target_levels"`
-	Locations    []string `json:"locations"`
-	RedFlags     []string `json:"red_flags"`
-	MinSalaryEUR int      `json:"min_salary_eur"`
+	TargetRoles     []string `json:"target_roles"`
+	TargetLevels    []string `json:"target_levels"`
+	Locations       []string `json:"locations"`
+	RemotePreference string   `json:"remote_preference"` // "required", "preferred", "not_interested"
+	RedFlags        []string `json:"red_flags"`
+	MinSalary       int      `json:"min_salary"`
+	SalaryCurrency  string   `json:"salary_currency"` // "EUR", "USD", "GBP", etc.
 }
 
 type Education struct {
