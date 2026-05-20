@@ -1,0 +1,71 @@
+{
+  "name": "Alex Rivera",
+  "title": "Senior Software Engineer",
+  "location": "Berlin, Germany",
+  "summary": "Backend-focused engineer with 8 years of experience building distributed systems and platform infrastructure. Comfortable owning services end-to-end, from design through production.",
+  "skills": ["Go", "Kubernetes", "PostgreSQL", "gRPC", "Terraform", "GCP", "Docker", "Redis"],
+  "experience": [
+    {
+      "role": "Senior Software Engineer",
+      "company": "Acme Corp GmbH",
+      "location": "Berlin, Germany",
+      "start": "2022-03",
+      "end": null,
+      "bullets": [
+        "Designed and shipped a multi-tenant job scheduling service handling 500k tasks/day",
+        "Reduced p99 API latency by 40% through query optimisation and connection pooling",
+        "Led on-call rotation and drove incident postmortems across the platform team"
+      ]
+    },
+    {
+      "role": "Software Engineer",
+      "company": "Startup XYZ",
+      "location": "Lisbon, Portugal",
+      "start": "2019-06",
+      "end": "2022-02",
+      "bullets": [
+        "Built microservices in Go on GKE, replacing a monolithic Rails app",
+        "Introduced structured logging and distributed tracing with OpenTelemetry",
+        "Mentored two junior engineers and ran bi-weekly tech talks"
+      ]
+    },
+    {
+      "role": "Junior Backend Developer",
+      "company": "Agency ABC",
+      "location": "Porto, Portugal",
+      "start": "2017-09",
+      "end": "2019-05",
+      "bullets": [
+        "Developed REST APIs in Python/Django for e-commerce clients",
+        "Automated deployment pipelines using GitLab CI and Ansible"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Master's",
+      "field": "Computer Science",
+      "institution": "University of Lisbon",
+      "location": "Lisbon, Portugal",
+      "start_date": "2015-09-01T00:00:00Z",
+      "end_date": "2017-07-01T00:00:00Z",
+      "gpa": 3.8,
+      "achievements": ["Thesis on distributed consensus algorithms", "Best Paper Award — Systems track 2017"]
+    },
+    {
+      "degree": "Bachelor's",
+      "field": "Computer Science",
+      "institution": "University of Porto",
+      "location": "Porto, Portugal",
+      "start_date": "2012-09-01T00:00:00Z",
+      "end_date": "2015-07-01T00:00:00Z"
+    }
+  ],
+  "preferences": {
+    "target_roles": ["Senior Software Engineer", "Staff Engineer", "Platform Engineer"],
+    "target_levels": ["Senior", "Staff"],
+    "locations": ["Berlin, Germany", "Remote — Europe"],
+    "red_flags": ["mandatory overtime", "no remote option", "enterprise Java stack"],
+    "min_salary_eur": 100000
+  }
+}
