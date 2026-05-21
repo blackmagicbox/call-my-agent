@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"path/filepath"
 
 	"github.com/blackmagicbox/call-my-agent/internal/profile"
 	"github.com/mark3labs/mcp-go/mcp"
@@ -12,8 +13,16 @@ import (
 )
 
 func main() {
+	// Resolve the profile.json path
+	exePath, err := os.Executable()
+	if err != nil {
+		log.Fatalf("failed to resolve executable path: %v", err)
+	}
+
+	profilePath := filepath.Join(filepath.Dir(exePath), "data", "profile.json")
+
 	// 1. Read the local profile.json
-	data, err := os.ReadFile("data/profile.json")
+	data, err := os.ReadFile(profilePath)
 	if err != nil {
 		log.Fatalf("failed to load profile: %v", err)
 	}
