@@ -8,6 +8,7 @@ type CandidateProfile struct {
 	Skills      []string     `json:"skills"`
 	Experience  []Experience `json:"experience"`
 	Education   []Education  `json:"education"`
+	Languages   []Language   `json:"languages"`
 	Preferences Preferences  `json:"preferences"`
 }
 
@@ -28,6 +29,12 @@ type Preferences struct {
 	RedFlags         []string `json:"red_flags"`
 	MinSalary        int      `json:"min_salary"`
 	SalaryCurrency   string   `json:"salary_currency"` // "EUR", "USD", "GBP", etc.
+}
+
+// Proficiency uses CEFR levels (A1–C2) or "native"/"fluent" for natural language.
+type Language struct {
+	Language    string `json:"language"`
+	Proficiency string `json:"proficiency"` // "native", "fluent", "C2", "C1", "B2", "B1", "A2", "A1"
 }
 
 type Education struct {

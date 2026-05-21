@@ -1,38 +1,73 @@
-# Call My Agent — MCP Server
+# Call My Agent
 
-An MCP (Model Context Protocol) server designed to work with the Claude chrome extension, helping users streamline their job search workflow.
+An MCP (Model Context Protocol) server that helps you job-hunt with Claude. It exposes your candidate profile, job evaluation tools, and cover letter generation as MCP tools — so Claude can assist you directly from the browser extension or Claude Desktop.
 
-## Overview
+## Features
 
-Call My Agent provides tools that enable Claude to:
-
-- **Job Fitness Assessment** — Evaluate job listings against user-defined search criteria and preferences, providing a fitness score and summary.
-- **Cover Letter Generation** — Generate tailored cover letters matched to specific job postings, incorporating the user's experience and the role's requirements.
-- **Search Criteria Management** — Store and manage the user's job search preferences, skills, and career goals to drive consistent evaluations.
+- **Candidate Profile** — Serve your profile (skills, experience, education, preferences) to Claude so it has full context when helping you.
+- **Job Fitness Evaluation** *(planned)* — Score job listings against your defined criteria and preferences.
+- **Cover Letter Generation** *(planned)* — Generate tailored cover letters matched to specific job postings.
+- **Application Tracking** *(planned)* — Keep track of where you've applied and the status of each application.
 
 ## Prerequisites
 
-- Go 1.26+
+- Go 1.23+
 
-## Installation
+## Getting Started
 
-```bash
-go install github.com/blackmagicbox/call-my-agent@latest
-```
-
-## Usage
+### 1. Build
 
 ```bash
-call-my-agent
+go build -o call-my-agent ./cmd/server
 ```
 
-Configure the Claude chrome extension to connect to this MCP server to enable job search assistance directly in your browser.
+### 2. Configure your profile
 
-## Configuration
+Copy the example profile and fill in your details:
 
-_Coming soon_ — details on how to define search criteria, experience profiles, and server options.
+```bash
+cp data/profile.example.json data/profile.json
+```
+
+Edit `data/profile.json` with your information — name, skills, experience, education, job preferences, etc.
+
+### 3. Register with Claude Desktop
+
+Add the server to your Claude Desktop configuration (`claude_desktop_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "call-my-agent": {
+      "command": "/absolute/path/to/call-my-agent"
+    }
+  }
+}
+```
+
+The server communicates over stdio using the MCP protocol.
+
+## Development
+
+```bash
+go run ./cmd/server          # run directly
+go test ./...                # run all tests
+```
+
+## Project Structure
+
+```
+cmd/server/       Application entrypoint
+internal/
+  profile/        Candidate profile data structures
+  job/            Job posting data structures
+  tools/          MCP tool handlers (stubs)
+  db/             Persistence layer (stub)
+data/
+  profile.json          Your candidate profile
+  profile.example.json  Template profile
+```
 
 ## License
 
-_TBD_
-
+This project is licensed under the [GNU Affero General Public License v3.0](LICENSE).

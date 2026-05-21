@@ -1,33 +1,31 @@
-# CLAUDE.md
+# call-my-agent
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## What this is
+A Go MCP server that turns Claude in Chrome into a personal job application agent.
+Browse LinkedIn → Claude reads the page → calls this server → returns fit score,
+cover letter, and saves the job to a local SQLite DB.
 
-## Project
+## Key design decisions
+- Pure Go, no CGO (use modernc.org/sqlite, not mattn/go-sqlite3)
+- MCP server runs over stdio (ServeStdio), not HTTP
+- Scoring is prompt-based via Claude API, not hardcoded rules
+- Candidate profile loaded from data/profile.json at startup
+- No UI, no auth, no external dependencies beyond the Claude API
 
-Call My Agent is an MCP (Model Context Protocol) server written in Go. It integrates with the Claude chrome extension to assist users with job searching — evaluating job fitness against user-defined criteria and generating tailored cover letters.
+## What NOT to do
+- Do not add HTTP endpoints — this is stdio MCP only
+- Do not use CGO or cgo-dependent libraries
+- Do not hardcode Rafael's profile in Go — load from profile.json
+- Do not add a database until the tracking ticket (86c9wt0uw)
 
-## Build & Run
+## Tool registry
+| Tool                  | Status       | Ticket     |
+|-----------------------|--------------|------------|
+| get_candidate_profile | stub → real  | 86c9wt05a  |
+| evaluate_job          | not started  | 86c9wt0gj  |
+| generate_cover_letter | not started  | 86c9wt0nj  |
+| save_job              | not started  | 86c9wt0uw  |
+| list_jobs             | not started  | 86c9wt0uw  |
 
-```bash
-go build -o call-my-agent ./cmd/server
+## Running locally
 go run ./cmd/server
-```
-
-## Test
-
-```bash
-go test ./...                  # all tests
-go test ./internal/...         # internal packages only
-go test -run TestName ./path   # single test
-```
-
-## Architecture
-
-- **`cmd/server/`** — Application entrypoint (`main.go`). Starts the MCP server.
-- **`internal/`** — Private packages (not importable by external modules). All core logic lives here.
-
-The project follows the standard Go layout: `cmd/` for binaries, `internal/` for implementation details.
-
-## Go Module
-
-Module path: `github.com/blackmagicbox/call-my-agent`
