@@ -1,0 +1,84 @@
+{
+  "name": "Alex Johnson",
+  "title": "Senior Software Engineer",
+  "location": "Amsterdam, Netherlands",
+  "summary": "Senior Software Engineer with 8+ years of experience building distributed systems, backend services, and developer tooling. Proficient in Go and Python, with a focus on observability, platform reliability, and cloud-native infrastructure.",
+  "skills": [
+    "Go", "Python", "Java", "TypeScript",
+    "React", "Next.js",
+    "PostgreSQL", "MongoDB", "Redis",
+    "Docker", "Kubernetes", "AWS", "Terraform", "GitHub Actions",
+    "Kafka", "gRPC", "REST API Design",
+    "CI/CD", "Observability", "SRE"
+  ],
+  "experience": [
+    {
+      "role": "Senior Software Engineer",
+      "company": "ExampleCorp",
+      "location": "Amsterdam, Netherlands",
+      "start": "2021-03",
+      "end": null,
+      "bullets": [
+        "Designed and maintained high-traffic backend services handling 5M+ daily requests.",
+        "Led migration from monolith to microservices, improving deployment frequency by 40%.",
+        "Established observability standards across the engineering org using OpenTelemetry."
+      ]
+    },
+    {
+      "role": "Software Engineer",
+      "company": "StartupXYZ",
+      "location": "Berlin, Germany",
+      "start": "2018-05",
+      "end": "2021-02",
+      "bullets": [
+        "Built and shipped a real-time data pipeline processing 10GB/day using Kafka and Go.",
+        "Reduced infrastructure costs by 35% through rightsizing and autoscaling improvements.",
+        "Mentored junior engineers and conducted technical interviews."
+      ]
+    },
+    {
+      "role": "Junior Software Engineer",
+      "company": "AgencyABC",
+      "location": "London, UK",
+      "start": "2016-07",
+      "end": "2018-04",
+      "bullets": [
+        "Developed REST APIs and internal tooling for e-commerce clients.",
+        "Improved test coverage from 20% to 80%, reducing production incidents significantly."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor's",
+      "field": "Computer Science",
+      "institution": "University of Example",
+      "location": "London, UK",
+      "start_date": "2012",
+      "end_date": "2016",
+      "achievements": ["Dean's List 2015", "Final project on distributed consensus algorithms"]
+    }
+  ],
+  "languages": [
+    { "language": "English", "proficiency": "native" },
+    { "language": "Dutch", "proficiency": "B2" },
+    { "language": "French", "proficiency": "A2" }
+  ],
+  "preferences": {
+    "target_roles": [
+      "Senior Software Engineer",
+      "Staff Software Engineer",
+      "Backend Engineer"
+    ],
+    "target_levels": ["Senior", "Staff"],
+    "locations": ["Amsterdam, Netherlands", "Remote"],
+    "remote_preference": "preferred",
+    "red_flags": [
+      "no engineering culture",
+      "no automated testing",
+      "excessive on-call without compensation"
+    ],
+    "min_salary": 90000,
+    "salary_currency": "EUR"
+  }
+}
