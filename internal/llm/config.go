@@ -1,6 +1,7 @@
 package llm
 
 import (
+	"errors"
 	"fmt"
 	"os"
 )
@@ -10,13 +11,18 @@ func FromConfig() (Provider, error) {
 	apiKey := os.Getenv("LLM_API_KEY")
 	model := os.Getenv("LLM_MODEL")
 
+	if provider == "" {
+		return nil, errors.New("provider not set")
+	}
+
 	switch provider {
 	case "gemini":
-		if model == "" {
-			model = "gemini-3.5-flash"
+		if apiKey == "" {
+			return nil, errors.New("missing api key for the selected provider")
 		}
-		return NewGemini(apiKey, model), nil
+		return NewGeminiProvider(apiKey, model), nil
+
 	default:
-		return nil, fmt.Errorf("unknown LLM_PROVIDER: %s", provider)
+		return nil, fmt.Errorf("unknown provider: %s", provider)
 	}
 }

@@ -5,66 +5,54 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 )
 
 type GeminiProvider struct {
-	apiKey string
-	model  string
-	http   *http.Client
+	apiKey  string
+	model   string
+	http    *http.Client
+	baseURL string // overridden in tests; defaults to Gemini production endpoint
 }
 
-func NewGemini(apiKey, model string) *GeminiProvider {
+func NewGeminiProvider(apiKey, model string) *GeminiProvider {
 	return &GeminiProvider{
 		apiKey: apiKey,
 		model:  model,
 		http:   &http.Client{},
 	}
 }
+func (g *GeminiProvider) Complete(ctx context.Context, system string, user string) (string, error) {
+	url := g.baseURL
+	if url == "" {
+		url = "https://generativelanguage.googleapis.com/v1beta/models/" + g.model + ":generateContent"
+	}
 
-func (g *GeminiProvider) Complete(ctx context.Context, system, user string) (string, error) {
-	// Assign the API endpoint
-	url := fmt.Sprintf("https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent", g.model)
-
-	// Create the body with the instructions and the data for the Generation
-	body, err := json.Marshal(map[string]interface{}{
-		"system_instruction": map[string]interface{}{
-			"parts": []map[string]string{{
-				"text": system,
-			}},
-			"contents": map[string]interface{}{
-				"parts": []map[string]string{{
-					"text": user,
-				}},
-			},
+	body, err := json.Marshal(map[string]any{
+		"system_instruction": map[string]any{
+			"parts": []map[string]string{{"text": system}},
+		},
+		"contents": []map[string]any{
+			{"parts": []map[string]string{{"text": user}}},
 		},
 	})
 	if err != nil {
-		return "", fmt.Errorf("failed to marshal content: %w", err)
+		return "", fmt.Errorf("failed to marshal request body: %w", err)
 	}
 
-	// Create request to the API
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(body))
+	request, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewReader(body))
 	if err != nil {
 		return "", fmt.Errorf("failed to create request: %w", err)
 	}
 
-	// Set content type and pass the API key
-	req.Header.Set("content-type", "application/json")
-	req.Header.Set("x-goog-api-key", g.apiKey)
+	request.Header.Set("content-type", "application/json")
+	request.Header.Add("X-LLM-API-KEY", g.apiKey)
 
-	// Request Gemini api
-	resp, err := g.http.Do(req)
+	response, err := g.http.Do(request)
 	if err != nil {
-		return "", fmt.Errorf("failed to send request: %w", err)
+		return "", fmt.Errorf("failed to complete request: %w", err)
 	}
-	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-
-		}
-	}(resp.Body)
+	defer response.Body.Close()
 
 	var result struct {
 		Candidates []struct {
@@ -76,8 +64,12 @@ func (g *GeminiProvider) Complete(ctx context.Context, system, user string) (str
 		} `json:"candidates"`
 	}
 
-	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+	if err := json.NewDecoder(response.Body).Decode(&result); err != nil {
 		return "", fmt.Errorf("failed to decode response: %w", err)
+	}
+
+	if len(result.Candidates) == 0 {
+		return "", fmt.Errorf("failed to complete Gemini model")
 	}
 
 	return result.Candidates[0].Content.Parts[0].Text, nil
