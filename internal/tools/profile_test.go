@@ -1,4 +1,4 @@
-package tools_test
+package tools
 
 import (
 	"context"
@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/blackmagicbox/call-my-agent/internal/profile"
-	"github.com/blackmagicbox/call-my-agent/internal/tools"
 	"github.com/mark3labs/mcp-go/mcp"
 )
 
@@ -28,7 +27,7 @@ var testProfile = profile.CandidateProfile{
 // TestHandleGetCandidateProfile_HappyPath verifies that the handler returns a
 // non-nil, non-error result containing valid JSON.
 func TestHandleGetCandidateProfile_HappyPath(t *testing.T) {
-	handler := tools.HandleGetCandidateProfile(testProfile)
+	handler := HandleGetCandidateProfile(testProfile)
 
 	result, err := handler(context.Background(), mcp.CallToolRequest{})
 	if err != nil {
@@ -48,7 +47,7 @@ func TestHandleGetCandidateProfile_HappyPath(t *testing.T) {
 // TestHandleGetCandidateProfile_ValidJSON verifies that the content text is
 // valid, parseable JSON.
 func TestHandleGetCandidateProfile_ValidJSON(t *testing.T) {
-	handler := tools.HandleGetCandidateProfile(testProfile)
+	handler := HandleGetCandidateProfile(testProfile)
 
 	result, err := handler(context.Background(), mcp.CallToolRequest{})
 	if err != nil {
@@ -65,7 +64,7 @@ func TestHandleGetCandidateProfile_ValidJSON(t *testing.T) {
 // TestHandleGetCandidateProfile_RequiredFields verifies that all required top-level
 // fields are present in the JSON output.
 func TestHandleGetCandidateProfile_RequiredFields(t *testing.T) {
-	handler := tools.HandleGetCandidateProfile(testProfile)
+	handler := HandleGetCandidateProfile(testProfile)
 
 	result, err := handler(context.Background(), mcp.CallToolRequest{})
 	if err != nil {
@@ -89,7 +88,7 @@ func TestHandleGetCandidateProfile_RequiredFields(t *testing.T) {
 // TestHandleGetCandidateProfile_SkillsNonEmpty verifies that the skills field
 // is a non-empty list.
 func TestHandleGetCandidateProfile_SkillsNonEmpty(t *testing.T) {
-	handler := tools.HandleGetCandidateProfile(testProfile)
+	handler := HandleGetCandidateProfile(testProfile)
 
 	result, err := handler(context.Background(), mcp.CallToolRequest{})
 	if err != nil {
@@ -114,7 +113,7 @@ func TestHandleGetCandidateProfile_SkillsNonEmpty(t *testing.T) {
 // TestHandleGetCandidateProfile_PreferencesFields verifies that the preferences
 // object contains target_roles and target_levels.
 func TestHandleGetCandidateProfile_PreferencesFields(t *testing.T) {
-	handler := tools.HandleGetCandidateProfile(testProfile)
+	handler := HandleGetCandidateProfile(testProfile)
 
 	result, err := handler(context.Background(), mcp.CallToolRequest{})
 	if err != nil {
