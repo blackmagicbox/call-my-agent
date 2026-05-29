@@ -2,12 +2,20 @@ package prompts
 
 import (
 	"bytes"
+	_ "embed"
 	"text/template"
 )
 
+//go:embed evaluate_job.system.txt
 var evaluateJobSystem string
+
+//go:embed evaluate_job.user.tmpl
 var evaluateJobUserTmpl string
+
+//go:embed cover_letter.system.tmpl
 var coverLetterSystemTmpl string
+
+//go:embed cover_letter.user.tmpl
 var coverLetterUserTmpl string
 
 func EvaluateJobSystem() string {

@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/blackmagicbox/call-my-agent/internal/llm"
 	"github.com/blackmagicbox/call-my-agent/internal/profile"
 	"github.com/blackmagicbox/call-my-agent/internal/tools"
 	"github.com/mark3labs/mcp-go/mcp"
@@ -30,7 +31,7 @@ func main() {
 		log.Fatalf("failed to parse profile: %v", err)
 	}
 
-	// Initialise the MCP server.
+	// Initialize the MCP server.
 	s := server.NewMCPServer(
 		"call-my-agent",
 		"0.1.0",
@@ -46,6 +47,11 @@ func main() {
 		),
 		tools.HandleGetCandidateProfile(p),
 	)
+	provider, err := llm.FromConfig()
+	if err != nil {
+		log.Fatalf("failed to load llm: %v", err)
+	}
+	s.AddTool(tools.EvaluateJobTool(), tools.HandleEvaluateJob(provider, p))
 
 	// Start server.
 	if err := server.ServeStdio(s); err != nil {
