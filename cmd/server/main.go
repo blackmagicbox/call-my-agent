@@ -52,6 +52,7 @@ func main() {
 		log.Fatalf("failed to load llm: %v", err)
 	}
 	s.AddTool(tools.EvaluateJobTool(), tools.HandleEvaluateJob(provider, p))
+	s.AddTool(tools.CoverLetterTool(), tools.HandleCoverLetter(provider, p))
 
 	// Start server.
 	if err := server.ServeStdio(s); err != nil {
