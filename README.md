@@ -1,5 +1,7 @@
 # Call My Agent
 
+![CI](https://github.com/blackmagicbox/call-my-agent/actions/workflows/ci.yml/badge.svg)
+
 An MCP (Model Context Protocol) server that helps you job-hunt with Claude. It exposes your candidate profile, job evaluation tools, and cover letter generation as MCP tools — so Claude can assist you directly from the browser extension or Claude Desktop.
 
 ## Features
