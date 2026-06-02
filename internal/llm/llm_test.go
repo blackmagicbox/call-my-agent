@@ -41,7 +41,7 @@ func TestGeminiComplete_HappyPath(t *testing.T) {
 			},
 		}
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer srv.Close()
 
@@ -86,7 +86,7 @@ func TestGeminiComplete_RequestBody(t *testing.T) {
 				}},
 			},
 		}
-		json.NewEncoder(w).Encode(resp)
+		_ = json.NewEncoder(w).Encode(resp)
 	}))
 	defer srv.Close()
 
@@ -99,7 +99,7 @@ func TestGeminiComplete_RequestBody(t *testing.T) {
 
 func TestGeminiComplete_NoCandidates(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		json.NewEncoder(w).Encode(map[string]any{"candidates": []any{}})
+		_ = json.NewEncoder(w).Encode(map[string]any{"candidates": []any{}})
 	}))
 	defer srv.Close()
 
@@ -112,7 +112,7 @@ func TestGeminiComplete_NoCandidates(t *testing.T) {
 
 func TestGeminiComplete_InvalidJSON(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("not json"))
+		_, _ = w.Write([]byte("not json"))
 	}))
 	defer srv.Close()
 
