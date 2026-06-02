@@ -39,7 +39,7 @@ func TestHandleEvaluateJob_HappyPath(t *testing.T) {
 	}
 }
 
-// TestHandleEvaluateJob_StripsJSONFences verifies markdown fences are removed.
+// TestHandleEvaluateJob_StripsJSONFences verifies Markdown fences are removed.
 func TestHandleEvaluateJob_StripsJSONFences(t *testing.T) {
 	fenced := "```json\n" + validLLMResponse + "\n```"
 	mock := &llm.MockProvider{Response: fenced}
@@ -74,7 +74,7 @@ func TestHandleEvaluateJob_MissingArguments(t *testing.T) {
 }
 
 // TestHandleEvaluateJob_MissingJobJSON verifies a tool error is returned when
-// job_json key is absent.
+// job_JSON key is absent.
 func TestHandleEvaluateJob_MissingJobJSON(t *testing.T) {
 	mock := &llm.MockProvider{}
 	handler := HandleEvaluateJob(mock, testProfile)
@@ -112,7 +112,7 @@ func TestHandleEvaluateJob_ProfileInjectedIntoPrompt(t *testing.T) {
 	mock := &llm.MockProvider{Response: validLLMResponse}
 	handler := HandleEvaluateJob(mock, testProfile)
 
-	handler(context.Background(), makeEvaluateRequest(validJobJSON))
+	_, _ = handler(context.Background(), makeEvaluateRequest(validJobJSON))
 
 	if mock.LastUser == "" {
 		t.Fatal("expected LLM to be called with a user prompt")
