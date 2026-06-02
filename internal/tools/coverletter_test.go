@@ -47,7 +47,7 @@ func TestHandleCoverLetter_DefaultsToProfessionalTone(t *testing.T) {
 	mock := &llm.MockProvider{Response: validCoverLetter}
 	handler := HandleCoverLetter(mock, testProfile)
 
-	handler(context.Background(), makeCoverLetterRequest(validJobJSON, ""))
+	_, _ = handler(context.Background(), makeCoverLetterRequest(validJobJSON, ""))
 
 	if !strings.Contains(mock.LastSystem, "professional") {
 		t.Errorf("expected default tone 'professional' in system prompt, got: %s", mock.LastSystem)
@@ -60,7 +60,7 @@ func TestHandleCoverLetter_CustomTone(t *testing.T) {
 	mock := &llm.MockProvider{Response: validCoverLetter}
 	handler := HandleCoverLetter(mock, testProfile)
 
-	handler(context.Background(), makeCoverLetterRequest(validJobJSON, "enthusiastic"))
+	_, _ = handler(context.Background(), makeCoverLetterRequest(validJobJSON, "enthusiastic"))
 
 	if !strings.Contains(mock.LastSystem, "enthusiastic") {
 		t.Errorf("expected tone 'enthusiastic' in system prompt, got: %s", mock.LastSystem)
@@ -120,7 +120,7 @@ func TestHandleCoverLetter_ProfileAndJobInjectedIntoPrompt(t *testing.T) {
 	mock := &llm.MockProvider{Response: validCoverLetter}
 	handler := HandleCoverLetter(mock, testProfile)
 
-	handler(context.Background(), makeCoverLetterRequest(validJobJSON, ""))
+	_, _ = handler(context.Background(), makeCoverLetterRequest(validJobJSON, ""))
 
 	if mock.LastUser == "" {
 		t.Fatal("expected LLM to be called with a user prompt")
