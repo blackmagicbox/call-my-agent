@@ -3,12 +3,71 @@ package db
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "modernc.org/sqlite"
 )
 
 type DB struct {
 	conn *sql.DB
+}
+
+type SaveJobParams struct {
+	ID             string    `json:"id"`
+	Title          string    `json:"title"`
+	Company        string    `json:"company"`
+	Location       string    `json:"location"`
+	Remote         string    `json:"remote"`
+	URL            string    `json:"url"`
+	Status         string    `json:"status"`
+	FitScore       int       `json:"fit_score"`
+	Recommendation string    `json:"recommendation"`
+	MatchedSkills  string    `json:"matched_skills"`
+	SkillGaps      string    `json:"skill_gaps"`
+	RedFlags       string    `json:"red_flags"`
+	Reasoning      string    `json:"reasoning"`
+	JobJSON        string    `json:"job_json"`
+	SeenAt         time.Time `json:"seen_at"`
+}
+
+type JobRow struct {
+	ID             string    `json:"id"`
+	Title          string    `json:"title"`
+	Company        string    `json:"company"`
+	Location       string    `json:"location"`
+	URL            string    `json:"url"`
+	Status         string    `json:"status"`
+	FitScore       int       `json:"fit_score"`
+	Recommendation string    `json:"recommendation"`
+	Reasoning      string    `json:"reasoning"`
+	SeenAt         time.Time `json:"seen_at"`
+	UpdatedAt      time.Time `json:"updated_at"`
+}
+
+func (db *DB) ListJobs(status string) ([]JobRow, error) {
+	sql
+}
+
+func (db *DB) SaveJob(params SaveJobParams) error {
+	sqlStmt := `INSERT INTO jobs(
+    	id, title, company, location, remote, url, status,
+        fit_score, recommendation, matched_skills,
+        skill_gaps, red_flags_hit, reasoning,
+        job_json, seen_at, updated_at) VALUES (
+			?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ON CONFLICT DO UPDATE SET
+            status = excluded.status,
+            fit_score = excluded.fit_score,
+			recommendation = excluded.recommendation,
+			matched_skills = excluded.matched_skills,
+			skill_gaps = excluded.skill_gaps,
+			red_flags_hit = excluded.red_flags_hit,
+			reasoning = excluded.reasoning,
+			job_json = excluded.job_json,
+			updated_at = CURRENT_TIMESTAMP();`
+
+	_, err := db.conn.Exec(sqlStmt, params)
+	return err
 }
 
 func Open(path string) (*DB, error) {
@@ -22,6 +81,10 @@ func Open(path string) (*DB, error) {
 		return nil, fmt.Errorf("failed to migrate database: %w", err)
 	}
 	return db, nil
+}
+
+func (db *DB) Close() error {
+	return db.conn.Close()
 }
 
 func (db *DB) migrate() error {
@@ -47,8 +110,4 @@ func (db *DB) migrate() error {
 	_, err := db.conn.Exec(sqlStmt)
 
 	return err
-}
-
-func (db *DB) Close() error {
-	return db.conn.Close()
 }
