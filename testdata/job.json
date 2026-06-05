@@ -1,0 +1,19 @@
+{
+  "id": "test-job-001",
+  "title": "Senior Site Reliability Engineer",
+  "company": "Test Company GmbH",
+  "location": "Berlin, Germany",
+  "remote": "hybrid",
+  "seniority": "Senior",
+  "description": "We are looking for a Senior SRE to join our platform team. You will work with Kubernetes, Go, and GCP to improve reliability, scalability, and developer productivity across our microservices platform.",
+  "required_skills": ["Kubernetes", "Go", "Terraform", "GCP"],
+  "nice_to_have": ["Istio", "ArgoCD", "Prometheus"],
+  "compensation": {
+    "min": 110000,
+    "max": 140000,
+    "currency": "EUR"
+  },
+  "url": "https://www.linkedin.com/jobs/view/test-001",
+  "seen_at": "2026-05-20T10:30:00Z",
+  "status": "to_evaluate"
+}

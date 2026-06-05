@@ -1,0 +1,56 @@
+{
+  "name": "Rafael",
+  "title": "Engineering Manager / Senior SRE",
+  "location": "Berlin, Germany",
+  "summary": "Experienced SRE and Engineering Manager with a strong background in distributed systems, cloud infrastructure, and platform reliability.",
+  "skills": ["Go", "Kubernetes", "Terraform", "GCP", "Java", "Python", "Prometheus", "Grafana"],
+  "experience": [
+    {
+      "role": "Engineering Manager",
+      "company": "Acme Corp",
+      "location": "Berlin, Germany",
+      "start": "2021-01",
+      "end": null,
+      "bullets": [
+        "Led a team of 8 SREs responsible for a multi-region GCP platform.",
+        "Reduced p99 latency by 40% through capacity planning and autoscaling improvements.",
+        "Drove adoption of SLOs and error budgets across 12 product teams."
+      ]
+    },
+    {
+      "role": "Senior Site Reliability Engineer",
+      "company": "Beta Systems",
+      "location": "Munich, Germany",
+      "start": "2018-03",
+      "end": "2020-12",
+      "bullets": [
+        "Owned Kubernetes cluster lifecycle for 200+ microservices.",
+        "Built Terraform modules adopted as the company standard for GCP provisioning."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor's",
+      "field": "Computer Science",
+      "institution": "University of São Paulo",
+      "location": "São Paulo, Brazil",
+      "start_date": "2010-02",
+      "end_date": "2014-12"
+    }
+  ],
+  "languages": [
+    {"language": "Portuguese", "proficiency": "native"},
+    {"language": "English",    "proficiency": "fluent"},
+    {"language": "German",     "proficiency": "B2"}
+  ],
+  "preferences": {
+    "target_roles":  ["Senior SRE", "Staff SRE"],
+    "target_levels": ["L5", "L6"],
+    "locations":     ["Berlin", "Munich", "Remote"],
+    "remote_preference": "preferred",
+    "red_flags":     ["no remote", "PHP", "no Kubernetes"],
+    "min_salary":    120000,
+    "salary_currency": "EUR"
+  }
+}
