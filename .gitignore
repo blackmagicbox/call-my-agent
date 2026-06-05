@@ -30,3 +30,4 @@ Thumbs.db
 .env.local
 profile.json
 data/profile.json
+data/jobs.db
