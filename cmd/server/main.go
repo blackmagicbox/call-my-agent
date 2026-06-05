@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/blackmagicbox/call-my-agent/internal/db"
 	"github.com/blackmagicbox/call-my-agent/internal/llm"
 	"github.com/blackmagicbox/call-my-agent/internal/profile"
 	"github.com/blackmagicbox/call-my-agent/internal/tools"
@@ -19,6 +20,17 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to resolve executable path: %v", err)
 	}
+	dbPath := filepath.Join(filepath.Dir(exePath), "data", "jobs.db")
+	database, err := db.Open(dbPath)
+	if err != nil {
+		log.Fatalf("failed to open database: %v", err)
+	}
+	defer func() {
+		if err := database.Close(); err != nil {
+			log.Printf("failed to close database: %v", err)
+		}
+	}()
+
 	profilePath := filepath.Join(filepath.Dir(exePath), "data", "profile.json")
 
 	// Load and parse the candidate profile.
@@ -53,6 +65,9 @@ func main() {
 	}
 	s.AddTool(tools.EvaluateJobTool(), tools.HandleEvaluateJob(provider, p))
 	s.AddTool(tools.CoverLetterTool(), tools.HandleCoverLetter(provider, p))
+	s.AddTool(tools.SaveJobTool(), tools.HandleSaveJob(database))
+	s.AddTool(tools.ListJobsTool(), tools.HandleListJobs(database))
+	s.AddTool(tools.GetApplicationStatusTool(), tools.HandleGetApplicationStatus(database))
 
 	// Start server.
 	if err := server.ServeStdio(s); err != nil {
